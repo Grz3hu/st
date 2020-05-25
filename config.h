@@ -219,6 +219,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ (Mod4Mask|ShiftMask), XK_Return,      newterm,        {.i =  0} },
 	{ MODKEY,               XK_N,           copyurl,        {.i =  0} },
+	{ MODKEY,            	XK_k,     		kscrollup,      {.i = -1} },
+	{ MODKEY,            	XK_j,   		kscrolldown,    {.i = -1} },
 };
 
 /*

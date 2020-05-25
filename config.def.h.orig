@@ -5,11 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=15:antialias=true:autohint=true";
+static char *font = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
-	"Inconsolata for Powerline:pixelsize=15:antialias=true:autohint=true",
-	"Hack Nerd Font Mono:pixelsize=15:antialias=true:autohint=true",
+	"Inconsolata for Powerline:pixelsize=16:antialias=true:autohint=true",
+	"Hack Nerd Font Mono:pixelsize=16:antialias=true:autohint=true",
 };
 
 static int borderpx = 2;
@@ -217,7 +217,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ TERMMOD,              XK_N,      newterm,        {.i =  0} },
+	{ (Mod4Mask|ShiftMask), XK_Return,      newterm,        {.i =  0} },
+	{ MODKEY,               XK_N,           copyurl,        {.i =  0} },
 };
 
 /*
