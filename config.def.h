@@ -5,11 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=16:antialias=true:autohint=true";
+static char *font = "Liberation Mono:pixelsize=15:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
-	"Inconsolata for Powerline:pixelsize=16:antialias=true:autohint=true",
-	"Hack Nerd Font Mono:pixelsize=16:antialias=true:autohint=true",
+	"Inconsolata for Powerline:pixelsize=15:antialias=true:autohint=true",
+	"Hack Nerd Font Mono:pixelsize=15:antialias=true:autohint=true",
 };
 
 static int borderpx = 14;
@@ -243,9 +243,13 @@ static MouseShortcut mshortcuts[] = {
 #define MODKEY Mod1Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
+static char *openurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -o", "externalpipe", NULL };
+static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NULL };
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
+	/* { XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} }, */
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
@@ -258,7 +262,8 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ Mod4Mask|ShiftMask, 	XK_Return,      newterm,        {.i =  0} },
-	{ TERMMOD,              XK_N,           copyurl,        {.i =  0} },
+/* TODO: delete and clean copyurl function */
+/* 	{ MODKEY|ShiftMask,     XK_N,           copyurl,        {.i =  0} }, */
 	{ MODKEY,            	XK_k,     		kscrollup,      {.i =  1} },
 	{ MODKEY,            	XK_j,   		kscrolldown,    {.i =  1} },
 	{ MODKEY,            	XK_Up,     		kscrollup,      {.i =  1} },
@@ -273,6 +278,9 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,              	XK_minus,       zoom,           {.f = -1} },
 	{ MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
 	{ MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
+	{ MODKEY,               XK_n,           externalpipe,   {.v = openurlcmd } },
+	{ MODKEY,               XK_y,           externalpipe,   {.v = copyurlcmd } },
+	{ MODKEY,               XK_o,           externalpipe,   {.v = copyoutput } },
 };
 
 /*
@@ -301,78 +309,7 @@ static Shortcut shortcuts[] = {
  * to be mapped below, add them to this array.
  */
 static KeySym mappedkeys[] = {
-	XK_space,
-	XK_m,
-	XK_i,
-	XK_A,
-	XK_B,
-	XK_C,
-	XK_D,
-	XK_E,
-	XK_F,
-	XK_G,
-	XK_H,
-	XK_I,
-	XK_K,
-	XK_J,
-	XK_L,
-	XK_M,
-	XK_N,
-	XK_O,
-	XK_P,
-	XK_Q,
-	XK_R,
-	XK_S,
-	XK_T,
-	XK_U,
-	XK_V,
-	XK_W,
-	XK_X,
-	XK_Y,
-	XK_Z,
-	XK_Z,
-	XK_0,
-	XK_1,
-	XK_2,
-	XK_3,
-	XK_4,
-	XK_5,
-	XK_6,
-	XK_7,
-	XK_8,
-	XK_9,
-	XK_exclam,
-	XK_quotedbl,
-	XK_numbersign,
-	XK_dollar,
-	XK_percent,
-	XK_ampersand,
-	XK_apostrophe,
-	XK_parenleft,
-	XK_parenright,
-	XK_asterisk,
-	XK_plus,
-	XK_comma,
-	XK_minus,
-	XK_period,
-	XK_slash,
-	XK_colon,
-	XK_semicolon,
-	XK_less,
-	XK_equal,
-	XK_greater,
-	XK_question,
-	XK_at,
-	XK_bracketleft,
-	XK_backslash,
-	XK_bracketright,
-	XK_asciicircum,
-	XK_underscore,
-	XK_grave,
-	XK_braceleft,
-	XK_bar,
-	XK_braceright,
-	XK_asciitilde,
+	-1
 };
 
 /*
@@ -771,13 +708,11 @@ static Key key[] = {
 	{ XK_KP_9,         Mod1Mask|ControlMask|ShiftMask, "\033[185;8u", 0,  0},
 	{ XK_KP_9,         Mod1Mask|ShiftMask,             "\033[185;4u", 0,  0},
 	{ XK_KP_9,         ShiftMask,                      "\033[185;2u", 0,  0},
-	{ XK_BackSpace,    ControlMask,                    "\033[127;5u", 0,  0},
 	{ XK_BackSpace,    ControlMask|ShiftMask,          "\033[127;6u", 0,  0},
 	{ XK_BackSpace,    Mod1Mask,                       "\033[127;3u", 0,  0},
 	{ XK_BackSpace,    Mod1Mask|ControlMask,           "\033[127;7u", 0,  0},
 	{ XK_BackSpace,    Mod1Mask|ControlMask|ShiftMask, "\033[127;8u", 0,  0},
 	{ XK_BackSpace,    Mod1Mask|ShiftMask,             "\033[127;4u", 0,  0},
-	{ XK_BackSpace,    ShiftMask,                      "\033[127;2u", 0,  0},
 	{ XK_Tab,          ControlMask,                    "\033[9;5u",   0,  0},
 	{ XK_Tab,          ControlMask|ShiftMask,          "\033[1;5Z",   0,  0},
 	{ XK_Tab,          Mod1Mask,                       "\033[1;3Z",   0,  0},
